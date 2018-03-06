@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#ищем все папки, в которых есть файл vasp.out
+dirs=( $(find . -name "vasp.out" -print0 | xargs -0 -n1 dirname) )
+for dir in "${dirs[@]}"
+do
+	if grep -q required "$dir/vasp.out"; then
+		# в папке в файле vasp.out есть поле required
+		echo "found required in vasp.out for dir $dir"
+	else
+		# в папке в файле vasp.out нет поля required
+		echo "not found requred in vasp.out for dir $dir"
+	fi
+done
